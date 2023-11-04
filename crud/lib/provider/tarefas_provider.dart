@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class TarefasProvider with ChangeNotifier {
   List<Tarefas> _tarefas = [];
 
+// Getter para acessar a lista de Tarefas
   List<Tarefas> get tarefas => _tarefas;
 
   void adicionarTarefa(Tarefas novaTarefa) {
     _tarefas.add(novaTarefa);
+    // Notifica sobre a mudança nos dados
     notifyListeners();
   }
 
@@ -17,6 +19,7 @@ class TarefasProvider with ChangeNotifier {
   }
 
   void atualizarTarefa(Tarefas tarefaAtualizada) {
+    // Encontra o indice da Tarefa a ser atualizada com base no nome
     final index =
         _tarefas.indexWhere((element) => element.nome == tarefaAtualizada.nome);
     if (index != -1) {

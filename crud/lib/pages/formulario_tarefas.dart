@@ -3,6 +3,7 @@ import 'package:crud/model/tarefas.dart';
 import 'package:crud/provider/tarefas_provider.dart';
 import 'package:provider/provider.dart';
 
+// Formulario de tarefas
 class FormularioTarefas extends StatefulWidget {
   final Tarefas? tarefas;
 
@@ -12,6 +13,7 @@ class FormularioTarefas extends StatefulWidget {
   State<FormularioTarefas> createState() => _FormularioTarefasState();
 }
 
+// Estado associado ao FormularioTarefas
 class _FormularioTarefasState extends State<FormularioTarefas> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nomeController = TextEditingController();
@@ -21,7 +23,7 @@ class _FormularioTarefasState extends State<FormularioTarefas> {
   void initState() {
     super.initState();
     if (widget.tarefas != null) {
-      // Preencha os campos do formulário com os detalhes da tarefa para edição
+      // Preencha os campos do formulario com os detalhes da tarefa para edicao
       _nomeController.text = widget.tarefas!.nome;
       _descricaoController.text = widget.tarefas!.descricao;
     }
@@ -35,7 +37,7 @@ class _FormularioTarefasState extends State<FormularioTarefas> {
             Text(widget.tarefas != null ? 'Editar Tarefa' : 'Adicionar Tarefa'),
       ),
       body: Form(
-        key: _formKey,
+        key: _formKey, // Chave valida formulario
         child: ListView(
           padding: EdgeInsets.all(16),
           children: [
@@ -80,6 +82,7 @@ class _FormularioTarefasState extends State<FormularioTarefas> {
     );
   }
 
+// Verifica se a URL e valida
   bool isValidUrl(String url) {
     final regex = RegExp(r'^http(s)?://.+\..+');
     return regex.hasMatch(url);

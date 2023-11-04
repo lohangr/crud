@@ -16,7 +16,9 @@ class TarefasPage extends StatefulWidget {
 
 class _TarefasPageState extends State<TarefasPage> {
   NumberFormat real = NumberFormat.currency(locale: 'pt-BR', name: 'R\$');
+  // Armazena tarefas selecionadas
   List<Tarefas> selecionadas = [];
+  // Armazena todas tarefas
   List<Tarefas> todasTarefas = [];
 
   void atualizarListaTarefas() {
@@ -24,7 +26,9 @@ class _TarefasPageState extends State<TarefasPage> {
       final tarefasProvider = context.read<TarefasProvider>();
       final tarefasNovas = tarefasProvider.tarefas;
       final tabela = TarefasRepository.tabela;
+      // Limpa lista de todas tarefas
       todasTarefas.clear();
+      // Adicionas todas tarefas na lista
       todasTarefas.addAll([...tabela, ...tarefasNovas]);
     });
   }
@@ -33,12 +37,13 @@ class _TarefasPageState extends State<TarefasPage> {
     final resultado = await Navigator.push(
       context,
       MaterialPageRoute(
+        // Navega para a pagina de detalhes da tarefa
         builder: (_) => TarefasDetalhesPage(tarefas: tarefas),
       ),
     );
 
     if (resultado != null) {
-      // Atualize a lista de tarefas com o resultado da edição
+      // Atualize a lista de tarefas com o resultado da edicao
       final tarefasProvider =
           Provider.of<TarefasProvider>(context, listen: false);
       tarefasProvider.atualizarTarefa(resultado);
@@ -46,12 +51,14 @@ class _TarefasPageState extends State<TarefasPage> {
     }
   }
 
+  // Navega para o formulario de tarefas
   navegarParaFormulario(BuildContext context) async {
     final resultado = await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => FormularioTarefas()),
     );
 
+    // Verifica se o resultado nao e nulo e realiza as acoes
     if (resultado != null) {
       final tarefasProvider =
           Provider.of<TarefasProvider>(context, listen: false);
@@ -60,6 +67,7 @@ class _TarefasPageState extends State<TarefasPage> {
     }
   }
 
+  // Exibe uma AppBar com os itens selecionados
   appBarDinamica() {
     if (selecionadas.isEmpty) {
       return AppBar(
@@ -75,6 +83,7 @@ class _TarefasPageState extends State<TarefasPage> {
             });
           },
         ),
+        // Mostra a contagem de itens selecionados
         title: Text('${selecionadas.length} selecionados'),
         backgroundColor: const Color.fromARGB(255, 233, 215, 189),
         elevation: 1,
@@ -100,6 +109,7 @@ class _TarefasPageState extends State<TarefasPage> {
         tarefasProvider.excluirTarefa(tarefas);
       }
     }
+    // Reseta o estado das tarefas selecionadas
     setState(() {
       selecionadas.clear();
     });
@@ -111,6 +121,7 @@ class _TarefasPageState extends State<TarefasPage> {
   @override
   void initState() {
     super.initState();
+    // Chama o metodo pra atualizar a lista de tarefas
     atualizarListaTarefas();
   }
 
@@ -121,9 +132,11 @@ class _TarefasPageState extends State<TarefasPage> {
     final tabela = TarefasRepository.tabela;
     todasTarefas = [...tabela, ...tarefasNovas];
 
+    // Retorna um Scaffold com AppBar e uma lista de tarefas
     return Scaffold(
       appBar: appBarDinamica(),
       body: ListView.separated(
+        // Constroi os itens da lista
         itemBuilder: (BuildContext context, int index) {
           final tarefas = todasTarefas[index];
           return ListTile(
@@ -139,8 +152,10 @@ class _TarefasPageState extends State<TarefasPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            // Verifica se a tarefa esta selecionada com base na lista 'selecionadas'
             selected: selecionadas.contains(tarefas),
             selectedTileColor: const Color.fromARGB(255, 246, 239, 232),
+            // Lida com a acao de pressionar longamente um ListTile
             onLongPress: () {
               setState(() {
                 (selecionadas.contains(tarefas))
@@ -164,9 +179,11 @@ class _TarefasPageState extends State<TarefasPage> {
           );
         },
         padding: EdgeInsets.all(16),
+        // Separador que sera exibido entre os itens da lista
         separatorBuilder: (_, __) => Divider(),
         itemCount: todasTarefas.length,
       ),
+      // Botao flutuante na tela, que adiciona uma nova tarefa
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           navegarParaFormulario(context);

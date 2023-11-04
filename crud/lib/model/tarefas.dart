@@ -5,7 +5,7 @@ class Tarefas {
 
   Tarefas({
     this.id =
-        -1, // Valor padrão de -1 para indicar que o id ainda não foi definido.
+        -1, // Valor padrao de -1 para indicar que o id ainda nao foi definido
     required this.nome,
     required this.descricao,
   });

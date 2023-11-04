@@ -6,6 +6,7 @@ import 'package:crud/provider/tarefas_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:crud/pages/page_inicial.dart';
 
+//Page de detalhes de tarefas
 class TarefasDetalhesPage extends StatefulWidget {
   Tarefas tarefas;
 
@@ -33,7 +34,7 @@ class _TarefasDetalhesPageState extends State<TarefasDetalhesPage> {
     );
 
     if (resultado != null) {
-      // Atualize a tarefa existente com as informações editadas
+      // Atualiza a tarefa existente com as informacoes editadas
       tarefas.nome = resultado.nome;
       tarefas.descricao = resultado.descricao;
       Provider.of<TarefasProvider>(context, listen: false)
@@ -51,7 +52,7 @@ class _TarefasDetalhesPageState extends State<TarefasDetalhesPage> {
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {
-              // Navegue para a página de edição e passe a tarefa atual como argumento
+              // Navegue para a pagina de edicao
               editarTarefa(context, widget.tarefas);
             },
           ),
